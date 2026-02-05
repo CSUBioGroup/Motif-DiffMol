@@ -25,11 +25,9 @@ conda activate motfi-diffmol
 
 ### 2. Data Preparation (SAFE Dataset)
 
-
-
-
 Motif-DiffMol utilizes the [SAFE (Sequential Attachment-based Fragment Embedding)](https://huggingface.co/datasets/datamol-io/safe-drugs) dataset for training. 
 The code is configured to use the SAFE-GPT dataset.
+
 ---
 
 ##  Training
