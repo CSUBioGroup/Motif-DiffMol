@@ -1,0 +1,71 @@
+mode: train #sample
+unit_size: 16
+
+loader:
+  batch_size: 512 #512*4=2048
+  num_workers: 8
+  pin_memory: True
+  persistent_workers: True
+
+optim:
+  weight_decay: 0
+  lr: 3e-4
+  beta1: 0.9
+  beta2: 0.999
+  eps: 1e-8
+
+trainer:
+  _target_: lightning.Trainer
+  accelerator: cuda
+  num_nodes: 1
+  devices: 4
+  gradient_clip_val: 1.0
+  precision: 'bf16'
+  max_steps: 300000
+  log_every_n_steps: 10000
+  strategy: "ddp"
+
+model:
+  name: motif_diffmol
+  backbone: bert
+  parameterization: subs
+  ignore_bos: True
+  cross_attn: True
+  var_min: True
+  sampler: semi_ar
+  sampling_eps_min: 1e-3
+  sampling_eps_max: 1.0
+  length: 128
+  attn_backend: flex
+
+  attention_probs_dropout_prob: 0.1
+  hidden_dropout_prob: 0.1
+  hidden_size: 768
+  intermediate_size: 3072
+  layer_norm_eps: 1e-12
+  max_position_embeddings: 256
+  num_attention_heads: 12
+  num_hidden_layers: 12
+  pad_token_id: 3
+  type_vocab_size: 2
+  vocab_size: 1882
+
+noise:
+  type: loglinear
+
+training:
+  ema: 0.9999
+  antithetic_sampling: True
+  resample: False
+
+callbacks:
+  step_ckpt:
+    _target_: lightning.pytorch.callbacks.ModelCheckpoint
+    dirpath: ckpt/unit16/
+    filename: 'step-{step}'
+    every_n_train_steps: 10000
+    save_top_k: -1
+    auto_insert_metric_name: False
+
+
+
