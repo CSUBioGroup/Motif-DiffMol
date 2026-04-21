@@ -1,15 +1,15 @@
 from lightning.pytorch.callbacks import Callback
 import os
 import hydra
-from src.Motif_DiffMol.model import Motif_DiffMol
-from src.Motif_DiffMol.utils.utils_data import get_dataloader, get_last_checkpoint
+from src.MARD_Mol.model import MARD_Mol
+from src.MARD_Mol.utils.utils_data import get_dataloader, get_last_checkpoint
 
 @hydra.main(version_base=None,
             config_path="configs/",
             config_name="base",
             )
 def train(config):
-    model = Motif_DiffMol(config)
+    model = MARD_Mol(config)
 
     if int(os.environ.get("LOCAL_RANK", 0)) == 0:
         print(f'model #parameters: {sum(p.numel() for p in model.parameters())}, '

@@ -1,4 +1,4 @@
-name: Motif-DiffMol
+name: MARD-Mol
 channels:
   - pytorch
   - anaconda

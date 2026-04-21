@@ -1,10 +1,10 @@
-# Motif-DiffMol: Synergistic Local-Global Molecular Modeling via Coarse-Grained Discrete Diffusion
+# MARD-Mol: A Hybrid Autoregressive-Diffusion Paradigm for Coarse-Grained Molecular Modeling
 
 
-This is the official implementation of the paper **"Motif-DiffMol: Synergistic Local-Global Molecular Modeling via Coarse-Grained Discrete Diffusion"**. We propose a discrete diffusion model based on Motifs, designed for efficient and controllable drug molecule generation and optimization.
+This is the official implementation of the paper **"MARD-Mol: A Hybrid Autoregressive-Diffusion Paradigm for Coarse-Grained Molecular Modeling"**. MARD-Mol is a deep generative framework for drug design. It combines autoregressive (AR) global planning with discrete diffusion local generation at the motif level, enabling high-quality molecular generation and a unique "diagnose-and-repair" optimization strategy.
 
 <p align="center">
-  <img src="./img/motif-diffmol.png" alt="Motif-DiffMol Architecture" width="60%">
+  <img src="./img/MARD-Mol.png" alt="MARD-Mol Architecture" width="60%">
   <br>
 
 </p>
@@ -20,23 +20,21 @@ We provide a comprehensive Conda configuration file to streamline the installati
 conda env create -f environment.yaml
 
 # 2. Activate the environment
-conda activate motfi-diffmol
+conda activate MARD-Mol
 ```
 
 ### 2. Data Preparation (SAFE Dataset)
 
-Motif-DiffMol utilizes the [SAFE (Sequential Attachment-based Fragment Embedding)](https://huggingface.co/datasets/datamol-io/safe-drugs) dataset for training. 
+MARD-Mol utilizes the [SAFE (Sequential Attachment-based Fragment Embedding)](https://huggingface.co/datasets/datamol-io/safe-drugs) dataset for training. 
 The code is configured to use the SAFE-GPT dataset.
 
 ---
 
 ##  Training
-
-
 All training parameters are located in `configs/train.yaml`. You can modify this file directly to suit your hardware resources.
 
 **Key Parameter:**
-* **`unit_size`**: **(Core Parameter)** Controls the granularity/length of the Motifs. A larger value prompts the model to focus on larger substructures, while a smaller value focuses on finer atomic combinations.
+* **`unit_size`**: **(Core Parameter)** The unit_size parameter in train.yaml controls the motif length. We recommend keeping the default value 16 for optimal performance.
 
 ### Launch Training
 Once configured, initiate the training process with the following command:
@@ -62,7 +60,7 @@ Explore the chemical space without any prior constraints.
 Generate molecules by extending from specific molecular fragments (scaffolds/substructures).
 
 ### 3. Property Optimization (PMO)
-Generate high-scoring molecules targeted at specific properties (e.g., QED, DRD2 activity), including optimization workflows and evaluation metrics.
+Property-guided "diagnose-and-repair" optimization.Generate high-scoring molecules targeted at specific properties (e.g., QED, DRD2 activity), including optimization workflows and evaluation metrics.
 
 ### 4. Lead Optimization
 Fine-tune a starting hit molecule to improve its properties while maintaining structural similarity.
